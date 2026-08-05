@@ -7,7 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "client": "vite",
-    "build": "vite build",
+    "build": "vite build && node -e \"import('fs').then(fs => fs.cpSync('dist', 'build', {recursive: true, force: true}))\"",
     "preview": "vite preview"
   },
   "dependencies": {

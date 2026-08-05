@@ -11,8 +11,8 @@
     "dev:all": "node scripts/dev.js",
     "server": "npm start --prefix server",
     "client": "npm run dev --prefix client",
-    "build": "npm run build --prefix client",
+    "build": "node scripts/build.js",
     "seed": "node server/seed.js",
-    "vercel-build": "npm run build --prefix client"
+    "vercel-build": "node scripts/build.js"
   }
 }

@@ -7,7 +7,9 @@ node_modules/
 
 # Build output
 client/dist/
+client/build/
 dist/
+build/
 
 # OS / Editor files
 .DS_Store
