@@ -14,6 +14,7 @@ dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 dotenv.config();
 
+import fs from 'fs';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
@@ -36,16 +37,15 @@ app.use(express.json());
 
 // Middleware to guarantee MongoDB connection readiness before handling API requests
 app.use(async (req, res, next) => {
-  if (req.path === '/' || req.path === '/api') {
-    return next();
+  if (req.path === '/' || req.path === '/api' || req.path.startsWith('/api/')) {
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('❌ [DB Middleware Error]:', err.message);
+      return res.status(500).json({ message: 'Database connection failed. Please try again later.' });
+    }
   }
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    console.error('❌ [DB Middleware Error]:', err.message);
-    return res.status(500).json({ message: 'Database connection failed. Please try again later.' });
-  }
+  next();
 });
 
 // API Routes
@@ -58,16 +58,6 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', analyticsRoutes);
 
-// Health & Root Endpoint
-app.get('/', (req, res) => {
-  res.json({
-    message: 'ShopEZ REST API Server is running smoothly!',
-    tagline: 'Your One-Stop Destination for Effortless Online Shopping.',
-    status: 'Healthy',
-    timestamp: new Date().toISOString(),
-  });
-});
-
 app.get('/api', (req, res) => {
   res.json({
     message: 'ShopEZ API Endpoint Active',
@@ -75,6 +65,40 @@ app.get('/api', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Serve Static Frontend Assets (Production & Web Service deployments)
+const possibleClientPaths = [
+  path.resolve(__dirname, '../client/dist'),
+  path.resolve(__dirname, '../client/build'),
+  path.resolve(process.cwd(), 'client/dist'),
+  path.resolve(process.cwd(), 'client/build'),
+  path.resolve(process.cwd(), 'dist'),
+  path.resolve(process.cwd(), 'build'),
+];
+
+const clientStaticPath = possibleClientPaths.find((p) => fs.existsSync(p));
+
+if (clientStaticPath) {
+  console.log(`[ShopEZ Server] Serving frontend static files from: ${clientStaticPath}`);
+  app.use(express.static(clientStaticPath));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(clientStaticPath, 'index.html'));
+  });
+} else {
+  // Health & Root Endpoint fallback if no static frontend build is present
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'ShopEZ REST API Server is running smoothly!',
+      tagline: 'Your One-Stop Destination for Effortless Online Shopping.',
+      status: 'Healthy',
+      timestamp: new Date().toISOString(),
+    });
+  });
+}
 
 // Error Middleware
 app.use(notFound);
