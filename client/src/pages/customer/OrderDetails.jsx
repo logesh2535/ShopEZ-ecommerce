@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CustomerLayout } from '../../layouts/CustomerLayout';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 import { fetchOrderById } from '../../services/orderService';
 import {
   Truck,
@@ -244,6 +244,7 @@ export const OrderDetails = () => {
                   <img
                     src={item.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150'}
                     alt={item.name}
+                    onError={handleImageError}
                     style={{ width: '64px', height: '64px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }}
                   />
                   <div style={{ flex: 1 }}>

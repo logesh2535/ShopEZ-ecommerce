@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../../layouts/AdminLayout';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 import { fetchProducts } from '../../services/productService';
 import { deleteProduct } from '../../services/adminService';
 import { ToastContext } from '../../context/ToastContext';
@@ -84,7 +84,7 @@ export const ManageProducts = () => {
               products.map((p) => (
                 <tr key={p._id}>
                   <td>
-                    <img src={p.images[0]} alt={p.name} style={{ width: '44px', height: '44px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
+                    <img src={p.images && p.images[0] ? p.images[0] : p.image} alt={p.name} onError={handleImageError} style={{ width: '44px', height: '44px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
                   </td>
                   <td>
                     <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{p.name}</span>

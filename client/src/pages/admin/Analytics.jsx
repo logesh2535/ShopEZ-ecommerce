@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../layouts/AdminLayout';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 import { fetchAdminDashboard } from '../../services/adminService';
 import { BarChart3, PieChart, TrendingUp, DollarSign } from 'lucide-react';
 
@@ -57,7 +57,7 @@ export const Analytics = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {data.topProducts?.map((p) => (
               <div key={p._id} style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '0.75rem' }}>
-                <img src={p.images[0]} alt={p.name} style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
+                <img src={p.images && p.images[0] ? p.images[0] : p.image} alt={p.name} onError={handleImageError} style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} />
                 <div style={{ flex: 1 }}>
                   <h4 style={{ fontSize: '0.92rem', color: 'var(--text-main)' }}>{p.name}</h4>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>⭐ {p.rating} ({p.reviewsCount} reviews)</span>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AdminLayout } from '../../layouts/AdminLayout';
+import { handleImageError } from '../../utils/formatCurrency';
 import { fetchCategories } from '../../services/productService';
 import { createCategory, deleteCategory } from '../../services/adminService';
 import { ToastContext } from '../../context/ToastContext';
@@ -117,7 +118,7 @@ export const ManageCategories = () => {
               ) : categories.map((c) => (
                 <tr key={c._id || c.name}>
                   <td>
-                    <img src={c.image} alt={c.name} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
+                    <img src={c.image} alt={c.name} onError={handleImageError} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
                   </td>
                   <td>
                     <strong style={{ color: 'var(--text-main)' }}>{c.name}</strong>

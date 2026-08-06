@@ -4,7 +4,7 @@ import { ShoppingBag, Heart, Star, Eye } from 'lucide-react';
 import { CartContext } from '../../context/CartContext';
 import { WishlistContext } from '../../context/WishlistContext';
 import { ToastContext } from '../../context/ToastContext';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 
 export const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
@@ -51,6 +51,7 @@ export const ProductCard = ({ product }) => {
           alt={product.name}
           className={`card-img-primary ${secondaryImage ? 'has-secondary' : ''}`}
           loading="lazy"
+          onError={handleImageError}
         />
         {secondaryImage && (
           <img
@@ -58,6 +59,7 @@ export const ProductCard = ({ product }) => {
             alt={`${product.name} alternate angle`}
             className="card-img-secondary"
             loading="lazy"
+            onError={handleImageError}
           />
         )}
 

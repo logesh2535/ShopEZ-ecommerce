@@ -43,7 +43,7 @@ export const sampleCategories = [
     images: [
       'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',
       'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80',
-      'https://images.unsplash.com/photo-1580481072645-022f9a6d8310?w=800&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
       'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80',
       'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
       'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
@@ -64,7 +64,7 @@ export const sampleCategories = [
       'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
       'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&q=80',
       'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80',
-      'https://images.unsplash.com/photo-1608248597260-8451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80',
       'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&q=80',
       'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80',
       'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=800&q=80',
@@ -74,7 +74,7 @@ export const sampleCategories = [
   {
     name: 'Sports & Fitness',
     image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
-    bannerImage: 'https://images.unsplash.com/photo-1517649763962-0c623266010b?w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&q=80',
     description: 'Cricket bats, FIFA soccer balls, basketballs, tennis rackets, badminton sets, and professional sports gear.',
     images: [
       'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&q=80',
@@ -82,7 +82,7 @@ export const sampleCategories = [
       'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80',
       'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=800&q=80',
       'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80',
-      'https://images.unsplash.com/photo-1593787140142-18451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
       'https://images.unsplash.com/photo-1592656094267-764a45160876?w=800&q=80',
       'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80',
       'https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?w=800&q=80',
@@ -152,7 +152,7 @@ export const sampleCategories = [
       'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&q=80',
       'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=800&q=80',
       'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
-      'https://images.unsplash.com/photo-1533230832620-74c102a0a2df?w=800&q=80',
+      'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
       'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&q=80',
       'https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=800&q=80',
       'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80',
@@ -170,7 +170,7 @@ export const sampleCategories = [
       'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',
       'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',
-      'https://images.unsplash.com/photo-1611591475777-233ca732222e?w=800&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',
       'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',
       'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',
       'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',
@@ -427,8 +427,8 @@ export const sampleProducts = [
     category: 'Electronics',
     brand: 'TechTab',
     images: [
-      'https://images.unsplash.com/photo-1609592424109-dd9892f1b177?w=800&q=80',
-      'https://images.unsplash.com/photo-1622445268465-8438165a2683?w=800&q=80',
+      'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&q=80',
+      'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&q=80',
     ],
     stock: 45,
     rating: 4.9,
@@ -496,7 +496,7 @@ export const sampleProducts = [
     category: 'Electronics',
     brand: 'AuraSound',
     images: [
-      'https://images.unsplash.com/photo-1622445268465-8438165a2683?w=800&q=80',
+      'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&q=80',
       'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&q=80',
     ],
     stock: 50,
@@ -895,7 +895,7 @@ export const sampleProducts = [
     category: 'Home & Living',
     brand: 'Lumina',
     images: [
-      'https://images.unsplash.com/photo-1580481072645-022f9a6d8310?w=800&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
       'https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=800&q=80',
     ],
     stock: 4,
@@ -1057,7 +1057,7 @@ export const sampleProducts = [
     brand: 'Lumina',
     images: [
       'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1629949009765-40fea3454794?w=800&q=80',
+      'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&q=80',
     ],
     stock: 35,
     rating: 4.8,
@@ -1245,7 +1245,7 @@ export const sampleProducts = [
     brand: 'PureBotanica',
     images: [
       'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
-      'https://images.unsplash.com/photo-1608248597260-8451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80',
     ],
     stock: 50,
     rating: 4.8,
@@ -1336,7 +1336,7 @@ export const sampleProducts = [
     category: 'Beauty & Care',
     brand: 'PureBotanica',
     images: [
-      'https://images.unsplash.com/photo-1608248597260-8451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80',
       'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
     ],
     stock: 45,
@@ -1520,7 +1520,7 @@ export const sampleProducts = [
     category: 'Beauty & Care',
     brand: 'PureBotanica',
     images: [
-      'https://images.unsplash.com/photo-1608248597260-8451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80',
       'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=80',
     ],
     stock: 55,
@@ -1617,7 +1617,7 @@ export const sampleProducts = [
     brand: 'ProSports',
     images: [
       'https://images.unsplash.com/photo-1614632537190-23e4146777db?w=800&q=80',
-      'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80',
+      'https://images.unsplash.com/photo-1614632537190-23e4146777db?w=800&q=80',
     ],
     stock: 40,
     rating: 4.8,
@@ -1708,7 +1708,7 @@ export const sampleProducts = [
     category: 'Sports & Fitness',
     brand: 'ProSports',
     images: [
-      'https://images.unsplash.com/photo-1593787140142-18451877626ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
       'https://images.unsplash.com/photo-1562077772-3bd90403f7f0?w=800&q=80',
     ],
     stock: 20,
@@ -1847,7 +1847,7 @@ export const sampleProducts = [
     brand: 'ProSports',
     images: [
       'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
-      'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80',
+      'https://images.unsplash.com/photo-1614632537190-23e4146777db?w=800&q=80',
     ],
     stock: 25,
     rating: 4.7,
@@ -2058,7 +2058,7 @@ export const sampleProducts = [
     brand: 'PulseX',
     images: [
       'https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=800&q=80',
-      'https://images.unsplash.com/photo-1580481072645-022f9a6d8310?w=800&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
     ],
     stock: 8,
     rating: 4.7,
@@ -3013,7 +3013,7 @@ export const sampleProducts = [
     brand: 'CraftWorld',
     images: [
       'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
-      'https://images.unsplash.com/photo-1533230832620-74c102a0a2df?w=800&q=80',
+      'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
     ],
     stock: 15,
     rating: 4.9,
@@ -3174,7 +3174,7 @@ export const sampleProducts = [
     brand: 'AeroKid',
     images: [
       'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
-      'https://images.unsplash.com/photo-1533230832620-74c102a0a2df?w=800&q=80',
+      'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80',
     ],
     stock: 35,
     rating: 4.9,
@@ -3407,7 +3407,7 @@ export const sampleProducts = [
     category: 'Jewelry & Accessories',
     brand: 'UrbanCraft',
     images: [
-      'https://images.unsplash.com/photo-1611591475777-233ca732222e?w=800&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',
       'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',
     ],
     stock: 35,
@@ -3545,7 +3545,7 @@ export const sampleProducts = [
     category: 'Jewelry & Accessories',
     brand: 'AuraGlow',
     images: [
-      'https://images.unsplash.com/photo-1611591475777-233ca732222e?w=800&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',
       'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',
     ],
     stock: 50,

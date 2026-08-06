@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
 import { CartContext } from '../../context/CartContext';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 import { Trash2, ArrowRight, ShoppingBag, ShieldCheck } from 'lucide-react';
 
 export const Cart = () => {
@@ -73,6 +73,7 @@ export const Cart = () => {
                   <img
                     src={product.images && product.images[0] ? product.images[0] : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150'}
                     alt={product.name}
+                    onError={handleImageError}
                     style={{ width: '80px', height: '80px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }}
                   />
 

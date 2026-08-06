@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
-import { formatPrice } from '../../utils/formatCurrency';
+import { formatPrice, handleImageError } from '../../utils/formatCurrency';
 import { ProductCard } from '../../components/product/ProductCard';
 import { fetchProductById, fetchProducts, createProductReview } from '../../services/productService';
 import { CartContext } from '../../context/CartContext';
@@ -144,6 +144,7 @@ export const ProductDetails = () => {
                 src={activeImage || (product.images && product.images[0]) || product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600'}
                 alt={product.name}
                 className="main-image"
+                onError={handleImageError}
               />
               {discount > 0 && (
                 <span className="badge badge-danger" style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 2 }}>
@@ -163,6 +164,7 @@ export const ProductDetails = () => {
                     className={`thumb-img ${activeImage === imgUrl ? 'active' : ''}`}
                     onClick={() => setActiveImage(imgUrl)}
                     onMouseEnter={() => setActiveImage(imgUrl)}
+                    onError={handleImageError}
                   />
                 ))}
               </div>

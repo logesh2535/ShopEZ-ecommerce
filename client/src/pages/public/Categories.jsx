@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
+import { handleImageError } from '../../utils/formatCurrency';
 import { fetchCategories } from '../../services/productService';
 import { ArrowRight, Sparkles, Grid, Image as ImageIcon } from 'lucide-react';
 
@@ -35,6 +36,7 @@ const CategoryCard = ({ cat }) => {
         <img
           src={categoryImages[activeImageIndex] || cat.image}
           alt={cat.name}
+          onError={handleImageError}
           style={{
             width: '100%',
             height: '100%',
@@ -111,6 +113,7 @@ const CategoryCard = ({ cat }) => {
               <img
                 src={imgUrl}
                 alt={`${cat.name} thumbnail ${idx + 1}`}
+                onError={handleImageError}
                 style={{ width: '40px', height: '36px', objectFit: 'cover', display: 'block' }}
               />
             </button>
