@@ -11,6 +11,8 @@ export const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [deals, setDeals] = useState([]);
   const [bestsellers, setBestsellers] = useState([]);
+  const [allProductsList, setAllProductsList] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(12);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -26,9 +28,10 @@ export const Home = () => {
         ]);
 
         if (Array.isArray(allProds)) {
-          setFeaturedProducts(allProds.filter((p) => p.isFeatured).slice(0, 4));
-          setDeals(allProds.filter((p) => p.isDeal || p.discount > 10).slice(0, 4));
-          setBestsellers(allProds.filter((p) => p.isBestSeller).slice(0, 4));
+          setAllProductsList(allProds);
+          setFeaturedProducts(allProds.filter((p) => p.isFeatured).slice(0, 8));
+          setDeals(allProds.filter((p) => p.isDeal || p.discount > 10).slice(0, 8));
+          setBestsellers(allProds.filter((p) => p.isBestSeller).slice(0, 8));
         }
 
         if (Array.isArray(catsData)) {
@@ -210,6 +213,40 @@ export const Home = () => {
               ? Array(4).fill(0).map((_, i) => <SkeletonCard key={i} />)
               : bestsellers.map((product) => <ProductCard key={product._id} product={product} />)}
           </div>
+        </div>
+      </section>
+
+      {/* Expanded Catalog Grid Section */}
+      <section style={{ padding: '4rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+            <div>
+              <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>
+                <Sparkles size={14} style={{ display: 'inline', marginRight: '4px' }} /> Full Collection
+              </span>
+              <h2 style={{ fontSize: '2rem' }}>Explore All Products</h2>
+              <p style={{ color: 'var(--text-muted)' }}>Browse through our full range of high-quality products</p>
+            </div>
+            <Link to="/products" className="btn-primary">View Entire Shop</Link>
+          </div>
+
+          <div className="product-grid">
+            {loading
+              ? Array(8).fill(0).map((_, i) => <SkeletonCard key={i} />)
+              : allProductsList.slice(0, visibleCount).map((product) => <ProductCard key={product._id} product={product} />)}
+          </div>
+
+          {allProductsList.length > visibleCount && (
+            <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 8)}
+                className="btn-secondary"
+                style={{ padding: '0.75rem 2.5rem', fontSize: '0.95rem' }}
+              >
+                Load More Products ({allProductsList.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

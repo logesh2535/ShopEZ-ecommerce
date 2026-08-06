@@ -9,7 +9,6 @@ export const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
   const { toggleWishlist, isInWishlist } = useContext(WishlistContext);
   const { addToast } = useContext(ToastContext);
-  const [isHovered, setIsHovered] = React.useState(false);
 
   const discount = product.discount || 0;
   const originalPrice = product.price;
@@ -17,11 +16,9 @@ export const ProductCard = ({ product }) => {
   const isWishlisted = isInWishlist(product._id);
   const inStock = product.stock > 0;
 
-  const hasSecondaryImage = product.images && product.images.length > 1;
   const mainImage = product.images && product.images.length > 0
     ? product.images[0]
-    : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600';
-  const secondaryImage = hasSecondaryImage ? product.images[1] : mainImage;
+    : (product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600');
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -42,14 +39,10 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <div
-      className="product-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="product-card">
       <div className="card-media">
         <img
-          src={isHovered && hasSecondaryImage ? secondaryImage : mainImage}
+          src={mainImage}
           alt={product.name}
           loading="lazy"
           style={{ transition: 'all 0.3s ease-in-out' }}

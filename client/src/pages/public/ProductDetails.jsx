@@ -138,20 +138,11 @@ export const ProductDetails = () => {
         <div className="product-detail-layout">
           {/* Gallery */}
           <div className="detail-gallery">
-            <img src={activeImage} alt={product.name} className="main-image" />
-            {product.images && product.images.length > 1 && (
-              <div className="thumbnail-row">
-                {product.images.map((imgUrl, i) => (
-                  <img
-                    key={i}
-                    src={imgUrl}
-                    alt={`Thumbnail ${i}`}
-                    className={`thumb-img ${activeImage === imgUrl ? 'active' : ''}`}
-                    onClick={() => setActiveImage(imgUrl)}
-                  />
-                ))}
-              </div>
-            )}
+            <img
+              src={(product.images && product.images[0]) || product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600'}
+              alt={product.name}
+              className="main-image"
+            />
           </div>
 
           {/* Product Summary & Buy Actions */}
