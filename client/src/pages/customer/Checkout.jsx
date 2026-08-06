@@ -100,7 +100,7 @@ export const Checkout = () => {
         <Breadcrumb items={[{ label: 'Cart', link: '/cart' }, { label: 'Checkout' }]} />
 
         <h1 style={{ fontSize: '2rem', marginBottom: '2rem', color: 'var(--text-main)', fontWeight: 800 }}>
-          Checkout & Flipkart Delivery Options
+          Checkout & Express Delivery Options
         </h1>
 
         <form onSubmit={handlePlaceOrderSubmit}>
@@ -218,7 +218,7 @@ export const Checkout = () => {
                       />
                       <div>
                         <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                          <Zap size={16} color="#eab308" /> Flipkart Express (Next-Day Delivery)
+                          <Zap size={16} color="#eab308" /> Express Delivery (Next-Day Delivery)
                         </div>
                         <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                           Guaranteed Delivery by Tomorrow morning • Open Box Inspection included

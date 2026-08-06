@@ -37,7 +37,7 @@ const FlipkartTrackingStepper = ({ status, timeline, deliveryType }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <span className="badge badge-primary" style={{ marginBottom: '0.4rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <Zap size={12} color="#eab308" /> Flipkart Express Tracker
+            <Zap size={12} color="#eab308" /> Express Delivery Tracker
           </span>
           <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)' }}>Live Delivery Progress</h3>
         </div>
@@ -134,7 +134,7 @@ export const OrderDetails = () => {
   if (loading || !order) {
     return (
       <CustomerLayout title="Order Details">
-        <p style={{ color: 'var(--text-muted)' }}>Loading Flipkart delivery schedule...</p>
+        <p style={{ color: 'var(--text-muted)' }}>Loading delivery schedule...</p>
       </CustomerLayout>
     );
   }
@@ -168,7 +168,7 @@ export const OrderDetails = () => {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399', fontWeight: 700, fontSize: '0.9rem' }}>
-                  <ShieldCheck size={18} /> Flipkart Secure Open Box Delivery OTP
+                  <ShieldCheck size={18} /> Secure Open Box Delivery OTP
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>
                   Share this 4-digit security OTP with your delivery executive upon parcel handover.

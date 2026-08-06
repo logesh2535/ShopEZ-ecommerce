@@ -30,7 +30,7 @@ export const OrderSuccess = () => {
               {/* Delivery OTP Badge */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', background: 'rgba(16, 185, 129, 0.15)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(16, 185, 129, 0.3)', marginBottom: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399', fontWeight: 600, fontSize: '0.9rem' }}>
-                  <ShieldCheck size={18} /> Flipkart Delivery OTP:
+                  <ShieldCheck size={18} /> Delivery OTP:
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 900, fontFamily: 'monospace', fontSize: '1.3rem', color: '#fff' }}>
                   <KeyRound size={16} color="#34d399" /> {order.deliveryOTP || '4829'}

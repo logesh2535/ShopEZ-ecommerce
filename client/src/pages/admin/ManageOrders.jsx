@@ -33,7 +33,7 @@ export const ManageOrders = () => {
   };
 
   return (
-    <AdminLayout title="Manage Customer Orders & Flipkart Delivery Scheduling">
+    <AdminLayout title="Manage Customer Orders & Delivery Scheduling">
       <div className="admin-table-wrapper">
         <table className="admin-table">
           <thead>
@@ -51,7 +51,7 @@ export const ManageOrders = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={8} style={{ textAlign: 'center' }}>Loading Flipkart order schedules...</td>
+                <td colSpan={8} style={{ textAlign: 'center' }}>Loading order schedules...</td>
               </tr>
             ) : orders.length === 0 ? (
               <tr>

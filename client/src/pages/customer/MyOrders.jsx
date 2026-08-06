@@ -24,10 +24,10 @@ export const MyOrders = () => {
   };
 
   return (
-    <CustomerLayout title="My Order History & Live Flipkart Delivery Tracker">
+    <CustomerLayout title="My Order History & Live Express Delivery Tracker">
       <div className="glass-card" style={{ padding: '2rem' }}>
         {loading ? (
-          <p style={{ color: 'var(--text-muted)' }}>Loading Flipkart delivery schedules...</p>
+          <p style={{ color: 'var(--text-muted)' }}>Loading delivery schedules...</p>
         ) : orders.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '2rem' }}>
             <ShoppingBag size={48} color="var(--text-muted)" style={{ marginBottom: '1rem' }} />
