@@ -6,10 +6,10 @@ import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
 import { ToastContext } from '../../context/ToastContext';
 import { placeOrder } from '../../services/orderService';
-import { ShieldCheck, CreditCard, DollarSign, Truck, Lock } from 'lucide-react';
+import { ShieldCheck, CreditCard, DollarSign, Truck, Lock, Calendar, Clock, Zap, PackageCheck } from 'lucide-react';
 
 export const Checkout = () => {
-  const { cartItems, subtotalPrice, discountTotal, taxAmount, shippingFee, grandTotal, clearCart } = useContext(CartContext);
+  const { cartItems, subtotalPrice, discountTotal, taxAmount, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const { addToast } = useContext(ToastContext);
   const navigate = useNavigate();
@@ -25,7 +25,21 @@ export const Checkout = () => {
   });
 
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
+  const [deliveryType, setDeliveryType] = useState('Express (Next Day)');
+  
+  // Dates for scheduled delivery
+  const today = new Date();
+  const tomorrowStr = new Date(today.getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const dayAfterStr = new Date(today.getTime() + 48 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const inThreeDaysStr = new Date(today.getTime() + 72 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  const [selectedDate, setSelectedDate] = useState(tomorrowStr);
+  const [selectedSlot, setSelectedSlot] = useState('Morning Slot (9:00 AM - 1:00 PM)');
   const [loading, setLoading] = useState(false);
+
+  // Dynamic Shipping Fee based on delivery type selection
+  const calculatedShippingFee = deliveryType === 'Express (Next Day)' ? 4.99 : 0;
+  const calculatedGrandTotal = subtotalPrice + taxAmount + calculatedShippingFee;
 
   if (cartItems.length === 0) {
     return (
@@ -63,8 +77,11 @@ export const Checkout = () => {
         totalAmount: subtotalPrice,
         discountAmount: discountTotal,
         taxAmount,
-        shippingFee,
-        grandTotal,
+        shippingFee: calculatedShippingFee,
+        grandTotal: calculatedGrandTotal,
+        deliveryType,
+        deliveryDate: selectedDate,
+        deliveryTimeSlot: selectedSlot,
       });
 
       clearCart();
@@ -82,7 +99,9 @@ export const Checkout = () => {
       <div className="container" style={{ paddingBottom: '5rem' }}>
         <Breadcrumb items={[{ label: 'Cart', link: '/cart' }, { label: 'Checkout' }]} />
 
-        <h1 style={{ fontSize: '2rem', marginBottom: '2rem', color: 'var(--text-main)' }}>Checkout & Shipping</h1>
+        <h1 style={{ fontSize: '2rem', marginBottom: '2rem', color: 'var(--text-main)', fontWeight: 800 }}>
+          Checkout & Flipkart Delivery Options
+        </h1>
 
         <form onSubmit={handlePlaceOrderSubmit}>
           <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '2.5rem', alignItems: 'start' }}>
@@ -90,8 +109,8 @@ export const Checkout = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
               {/* Shipping Address */}
               <div className="glass-card" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Truck size={20} color="var(--primary-400)" /> Shipping Address
+                <h3 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-400)' }}>
+                  <Truck size={22} /> 1. Shipping Address
                 </h3>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -106,7 +125,7 @@ export const Checkout = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Phone Number</label>
+                    <label>Phone Number (Required for Delivery OTP)</label>
                     <input
                       type="text"
                       value={shippingAddress.phone}
@@ -150,7 +169,7 @@ export const Checkout = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Zip Code</label>
+                    <label>Pincode / Zip Code</label>
                     <input
                       type="text"
                       value={shippingAddress.zipCode}
@@ -162,14 +181,202 @@ export const Checkout = () => {
                 </div>
               </div>
 
+              {/* Flipkart-Style Delivery Schedule & Time Slot Selection */}
+              <div className="glass-card" style={{ padding: '2rem', border: '1px solid rgba(139, 92, 246, 0.4)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <h3 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+                    <Calendar size={22} color="var(--primary-400)" /> 2. Delivery Speed & Time Slot Schedule
+                  </h3>
+                  <span className="badge badge-primary" style={{ fontSize: '0.75rem' }}>
+                    <ShieldCheck size={12} style={{ marginRight: '4px' }} /> Verified Delivery Slots
+                  </span>
+                </div>
+
+                {/* Delivery Options */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+                  {/* Option 1: Express Next Day */}
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '1.2rem',
+                      borderRadius: 'var(--radius-md)',
+                      background: deliveryType === 'Express (Next Day)' ? 'rgba(139, 92, 246, 0.15)' : 'rgba(15, 23, 42, 0.5)',
+                      border: deliveryType === 'Express (Next Day)' ? '2px solid var(--primary-500)' : '1px solid var(--border-light)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <input
+                        type="radio"
+                        name="deliveryType"
+                        value="Express (Next Day)"
+                        checked={deliveryType === 'Express (Next Day)'}
+                        onChange={() => setDeliveryType('Express (Next Day)')}
+                      />
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Zap size={16} color="#eab308" /> Flipkart Express (Next-Day Delivery)
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          Guaranteed Delivery by Tomorrow morning • Open Box Inspection included
+                        </div>
+                      </div>
+                    </div>
+                    <span style={{ fontWeight: 800, color: 'var(--accent-amber)', fontSize: '1.1rem' }}>$4.99</span>
+                  </label>
+
+                  {/* Option 2: Scheduled Slot */}
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '1.2rem',
+                      borderRadius: 'var(--radius-md)',
+                      background: deliveryType === 'Scheduled Slot' ? 'rgba(139, 92, 246, 0.15)' : 'rgba(15, 23, 42, 0.5)',
+                      border: deliveryType === 'Scheduled Slot' ? '2px solid var(--primary-500)' : '1px solid var(--border-light)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <input
+                        type="radio"
+                        name="deliveryType"
+                        value="Scheduled Slot"
+                        checked={deliveryType === 'Scheduled Slot'}
+                        onChange={() => setDeliveryType('Scheduled Slot')}
+                      />
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Clock size={16} color="var(--primary-400)" /> Preferred Time Slot Delivery
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          Choose your exact delivery date & preferred time window
+                        </div>
+                      </div>
+                    </div>
+                    <span style={{ fontWeight: 800, color: 'var(--accent-emerald)', fontSize: '1.05rem' }}>FREE</span>
+                  </label>
+
+                  {/* Option 3: Standard Free */}
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '1.2rem',
+                      borderRadius: 'var(--radius-md)',
+                      background: deliveryType === 'Standard' ? 'rgba(139, 92, 246, 0.15)' : 'rgba(15, 23, 42, 0.5)',
+                      border: deliveryType === 'Standard' ? '2px solid var(--primary-500)' : '1px solid var(--border-light)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <input
+                        type="radio"
+                        name="deliveryType"
+                        value="Standard"
+                        checked={deliveryType === 'Standard'}
+                        onChange={() => setDeliveryType('Standard')}
+                      />
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <PackageCheck size={16} color="var(--text-muted)" /> Standard FREE Delivery
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          Delivered in 3 - 5 business days
+                        </div>
+                      </div>
+                    </div>
+                    <span style={{ fontWeight: 800, color: 'var(--accent-emerald)', fontSize: '1.05rem' }}>FREE</span>
+                  </label>
+                </div>
+
+                {/* Sub-section: Select Date & Time Slot if Scheduled Slot is selected */}
+                {deliveryType === 'Scheduled Slot' && (
+                  <div style={{ padding: '1.25rem', background: 'rgba(17, 24, 39, 0.7)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)' }}>
+                    <h4 style={{ fontSize: '0.95rem', marginBottom: '1rem', color: 'var(--primary-300)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <Calendar size={16} /> Choose Preferred Date & Time Window
+                    </h4>
+
+                    {/* Date Selector Buttons */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                      {[
+                        { label: 'Tomorrow', date: tomorrowStr },
+                        { label: 'Day After', date: dayAfterStr },
+                        { label: 'In 3 Days', date: inThreeDaysStr },
+                      ].map((item) => (
+                        <button
+                          key={item.date}
+                          type="button"
+                          onClick={() => setSelectedDate(item.date)}
+                          style={{
+                            padding: '0.75rem',
+                            borderRadius: 'var(--radius-sm)',
+                            border: selectedDate === item.date ? '2px solid var(--primary-400)' : '1px solid var(--border-light)',
+                            background: selectedDate === item.date ? 'rgba(139, 92, 246, 0.25)' : 'rgba(0, 0, 0, 0.3)',
+                            color: selectedDate === item.date ? '#fff' : 'var(--text-muted)',
+                            cursor: 'pointer',
+                            fontWeight: 600,
+                            textAlign: 'center',
+                          }}
+                        >
+                          <div>{item.label}</div>
+                          <div style={{ fontSize: '0.75rem', opacity: 0.8, marginTop: '2px' }}>{item.date}</div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Time Slot Buttons */}
+                    <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Select Preferred Time Slot:</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                      {[
+                        'Morning Slot (8:00 AM - 12:00 PM)',
+                        'Afternoon Slot (12:00 PM - 4:00 PM)',
+                        'Evening Slot (4:00 PM - 8:00 PM)',
+                      ].map((slot) => (
+                        <label
+                          key={slot}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.6rem',
+                            padding: '0.75rem 1rem',
+                            borderRadius: 'var(--radius-sm)',
+                            background: selectedSlot === slot ? 'rgba(16, 185, 129, 0.15)' : 'rgba(0, 0, 0, 0.2)',
+                            border: `1px solid ${selectedSlot === slot ? 'var(--accent-emerald)' : 'var(--border-light)'}`,
+                            cursor: 'pointer',
+                            fontSize: '0.9rem',
+                          }}
+                        >
+                          <input
+                            type="radio"
+                            name="timeSlot"
+                            value={slot}
+                            checked={selectedSlot === slot}
+                            onChange={() => setSelectedSlot(slot)}
+                          />
+                          <span style={{ fontWeight: selectedSlot === slot ? 700 : 400 }}>{slot}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Payment Method */}
               <div className="glass-card" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <CreditCard size={20} color="var(--accent-emerald)" /> Select Payment Method
+                <h3 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-emerald)' }}>
+                  <CreditCard size={22} /> 3. Select Payment Method
                 </h3>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                  {['Credit Card', 'Debit Card', 'PayPal', 'Cash on Delivery'].map((method) => (
+                  {['Credit Card', 'Debit Card', 'PayPal', 'Cash on Delivery', 'UPI / NetBanking'].map((method) => (
                     <label
                       key={method}
                       style={{
@@ -198,9 +405,9 @@ export const Checkout = () => {
             </div>
 
             {/* Order Summary & Place Order */}
-            <div className="glass-card" style={{ padding: '2rem' }}>
+            <div className="glass-card" style={{ padding: '2rem', sticky: 'top', top: '2rem' }}>
               <h3 style={{ fontSize: '1.3rem', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '0.75rem' }}>
-                Order Preview
+                Order Summary
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem', maxHeight: '240px', overflowY: 'auto' }}>
@@ -227,12 +434,12 @@ export const Checkout = () => {
                   <span>${taxAmount.toFixed(2)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-muted)' }}>Shipping Fee</span>
-                  <span>{shippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : `$${shippingFee.toFixed(2)}`}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Shipping Fee ({deliveryType})</span>
+                  <span>{calculatedShippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : `$${calculatedShippingFee.toFixed(2)}`}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary-400)', paddingTop: '0.5rem', borderTop: '1px solid var(--border-light)' }}>
                   <span>Grand Total</span>
-                  <span>${grandTotal.toFixed(2)}</span>
+                  <span>${calculatedGrandTotal.toFixed(2)}</span>
                 </div>
               </div>
 

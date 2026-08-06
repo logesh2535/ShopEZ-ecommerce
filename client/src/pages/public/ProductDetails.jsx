@@ -8,7 +8,7 @@ import { CartContext } from '../../context/CartContext';
 import { WishlistContext } from '../../context/WishlistContext';
 import { ToastContext } from '../../context/ToastContext';
 import { AuthContext } from '../../context/AuthContext';
-import { Star, ShoppingBag, Heart, ShieldCheck, Truck, RefreshCw, Send } from 'lucide-react';
+import { Star, ShoppingBag, Heart, ShieldCheck, Truck, RefreshCw, Send, MapPin, Zap, Clock, KeyRound } from 'lucide-react';
 import '../../styles/products.css';
 
 export const ProductDetails = () => {
@@ -20,10 +20,13 @@ export const ProductDetails = () => {
   const [activeImage, setActiveImage] = useState('');
   const [quantity, setQuantity] = useState(1);
 
+  // Pincode Delivery Estimator state
+  const [pincode, setPincode] = useState('62704');
+  const [deliveryInfo, setDeliveryInfo] = useState(null);
+
   // Review submission state
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
-  const [reviewsList, setReviewsList] = useState([]);
 
   const { addToCart } = useContext(CartContext);
   const { toggleWishlist, isInWishlist } = useContext(WishlistContext);
@@ -43,6 +46,9 @@ export const ProductDetails = () => {
         // Fetch related products in same category
         const allProds = await fetchProducts({ category: prod.category });
         setRelatedProducts(allProds.filter((p) => p._id !== id).slice(0, 4));
+
+        // Initial default delivery estimation
+        calculateDelivery('62704');
       } catch (err) {
         console.error('Error fetching product:', err);
       } finally {
@@ -52,6 +58,29 @@ export const ProductDetails = () => {
 
     loadData();
   }, [id]);
+
+  const calculateDelivery = (pin) => {
+    if (!pin || pin.length < 4) {
+      setDeliveryInfo(null);
+      return;
+    }
+
+    const today = new Date();
+    const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+    const standardDate = new Date(today.getTime() + 4 * 24 * 60 * 60 * 1000);
+
+    setDeliveryInfo({
+      expressDate: tomorrow.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }),
+      standardDate: standardDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }),
+      pinCode: pin,
+    });
+  };
+
+  const handlePincodeCheck = (e) => {
+    e.preventDefault();
+    calculateDelivery(pincode);
+    addToast(`Delivery options checked for Pincode ${pincode}`, 'info');
+  };
 
   if (loading || !product) {
     return (
@@ -93,7 +122,6 @@ export const ProductDetails = () => {
       await createProductReview(id, { rating, comment });
       addToast('Review submitted successfully!', 'success');
       setComment('');
-      // Reload product data
       const updated = await fetchProductById(id);
       setProduct(updated);
     } catch (err) {
@@ -162,8 +190,52 @@ export const ProductDetails = () => {
 
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>{product.description}</p>
 
+            {/* Flipkart-Style Pincode Delivery Estimator Widget */}
+            <div style={{ padding: '1.25rem', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(139, 92, 246, 0.3)', borderRadius: 'var(--radius-md)' }}>
+              <form onSubmit={handlePincodeCheck} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'center' }}>
+                <MapPin size={18} color="var(--primary-400)" />
+                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-main)' }}>Delivery Options to Pincode:</span>
+                <input
+                  type="text"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                  placeholder="Enter Pincode"
+                  style={{
+                    width: '120px',
+                    padding: '0.4rem 0.6rem',
+                    borderRadius: 'var(--radius-sm)',
+                    border: '1px solid var(--border-light)',
+                    background: 'var(--bg-surface)',
+                    color: '#fff',
+                    fontSize: '0.88rem',
+                  }}
+                  required
+                />
+                <button type="submit" className="btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
+                  Check
+                </button>
+              </form>
+
+              {deliveryInfo && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)', paddingTop: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399', fontWeight: 600 }}>
+                    <Zap size={14} color="#eab308" /> Express Next-Day Delivery by <strong style={{ color: '#fff' }}>{deliveryInfo.expressDate}</strong>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Truck size={14} color="var(--primary-400)" /> Standard FREE Delivery by <strong style={{ color: 'var(--text-main)' }}>{deliveryInfo.standardDate}</strong>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Clock size={14} color="var(--accent-amber)" /> Preferred Time Slots (Morning / Afternoon / Evening) available at checkout
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <KeyRound size={14} color="var(--primary-400)" /> Open Box Inspection & Security 4-Digit Delivery OTP supported
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Quantity Selector & Buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-sm)', background: 'var(--bg-surface)' }}>
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}

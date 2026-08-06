@@ -104,12 +104,25 @@ if (clientStaticPath) {
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+let currentPort = Number(process.env.PORT) || 5000;
 
 if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`[ShopEZ Server] Server listening on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
-  });
+  const startServer = (portToTry) => {
+    const serverInstance = app
+      .listen(portToTry, () => {
+        console.log(`[ShopEZ Server] Server listening on port ${portToTry} in ${process.env.NODE_ENV || 'development'} mode.`);
+      })
+      .on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          console.warn(`⚠️ [ShopEZ Server] Port ${portToTry} is already in use. Trying port ${portToTry + 1}...`);
+          startServer(portToTry + 1);
+        } else {
+          console.error('❌ [ShopEZ Server Error]:', err.message);
+        }
+      });
+  };
+
+  startServer(currentPort);
 }
 
 export default app;
