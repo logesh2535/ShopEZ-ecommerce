@@ -20,6 +20,10 @@ export const ProductCard = ({ product }) => {
     ? product.images[0]
     : (product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600');
 
+  const secondaryImage = product.images && product.images.length > 1
+    ? product.images[1]
+    : null;
+
   const handleAddToCart = (e) => {
     e.preventDefault();
     if (!inStock) return;
@@ -44,9 +48,17 @@ export const ProductCard = ({ product }) => {
         <img
           src={mainImage}
           alt={product.name}
+          className={`card-img-primary ${secondaryImage ? 'has-secondary' : ''}`}
           loading="lazy"
-          style={{ transition: 'all 0.3s ease-in-out' }}
         />
+        {secondaryImage && (
+          <img
+            src={secondaryImage}
+            alt={`${product.name} alternate angle`}
+            className="card-img-secondary"
+            loading="lazy"
+          />
+        )}
 
         {/* Discount Badge */}
         {discount > 0 && (

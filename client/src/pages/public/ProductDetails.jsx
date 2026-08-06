@@ -138,11 +138,34 @@ export const ProductDetails = () => {
         <div className="product-detail-layout">
           {/* Gallery */}
           <div className="detail-gallery">
-            <img
-              src={(product.images && product.images[0]) || product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600'}
-              alt={product.name}
-              className="main-image"
-            />
+            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+              <img
+                src={activeImage || (product.images && product.images[0]) || product.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600'}
+                alt={product.name}
+                className="main-image"
+              />
+              {discount > 0 && (
+                <span className="badge badge-danger" style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 2 }}>
+                  {discount}% OFF
+                </span>
+              )}
+            </div>
+
+            {/* Thumbnail Navigation for Primary & Secondary Images */}
+            {product.images && product.images.length > 1 && (
+              <div className="thumbnail-row">
+                {product.images.map((imgUrl, idx) => (
+                  <img
+                    key={idx}
+                    src={imgUrl}
+                    alt={`${product.name} view ${idx + 1}`}
+                    className={`thumb-img ${activeImage === imgUrl ? 'active' : ''}`}
+                    onClick={() => setActiveImage(imgUrl)}
+                    onMouseEnter={() => setActiveImage(imgUrl)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Summary & Buy Actions */}

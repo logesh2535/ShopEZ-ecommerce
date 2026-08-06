@@ -64,14 +64,34 @@
   overflow: hidden;
 }
 
-.product-card .card-media img {
+.product-card .card-media img.card-img-primary {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition-smooth);
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
 }
 
-.product-card:hover .card-media img {
+.product-card .card-media img.card-img-secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.product-card:hover .card-media img.card-img-primary.has-secondary {
+  opacity: 0;
+}
+
+.product-card:hover .card-media img.card-img-secondary {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.product-card:hover .card-media img.card-img-primary:not(.has-secondary) {
   transform: scale(1.05);
 }
 
