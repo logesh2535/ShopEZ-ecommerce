@@ -142,7 +142,7 @@ export const Products = () => {
 
             {/* Price Filter */}
             <div className="filter-group">
-              <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)' }}>Price Range ($)</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)' }}>Price Range (₹)</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <input
                   type="number"

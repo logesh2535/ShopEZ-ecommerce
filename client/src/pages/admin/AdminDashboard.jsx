@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../../layouts/AdminLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchAdminDashboard } from '../../services/adminService';
 import { DollarSign, ShoppingBag, Package, Users, AlertTriangle, TrendingUp } from 'lucide-react';
 
@@ -42,7 +43,7 @@ export const AdminDashboard = () => {
           <div>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Total Revenue</span>
             <h3 style={{ fontSize: '1.8rem', color: 'var(--text-main)', margin: '0.25rem 0' }}>
-              ${totalRevenue.toLocaleString()}
+              {formatPrice(totalRevenue)}
             </h3>
             <span style={{ fontSize: '0.75rem', color: 'var(--accent-emerald)', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
               <TrendingUp size={12} /> +18.4% from last month
@@ -89,7 +90,7 @@ export const AdminDashboard = () => {
 
       {/* SVG Bar Chart for Monthly Revenue */}
       <div className="glass-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-        <h3 style={{ fontSize: '1.3rem', marginBottom: '1.5rem' }}>Monthly Revenue Overview ($)</h3>
+        <h3 style={{ fontSize: '1.3rem', marginBottom: '1.5rem' }}>Monthly Revenue Overview (₹)</h3>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1.5rem', height: '180px', paddingTop: '1rem', borderBottom: '1px solid var(--border-light)' }}>
           {monthlySales.map((item) => {
             const max = 15000;
@@ -97,7 +98,7 @@ export const AdminDashboard = () => {
             return (
               <div key={item.month} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end' }}>
                 <span style={{ fontSize: '0.75rem', color: 'var(--primary-400)', fontWeight: 700, marginBottom: '0.4rem' }}>
-                  ${(item.sales / 1000).toFixed(1)}k
+                  ₹{(item.sales / 1000).toFixed(1)}k
                 </span>
                 <div
                   style={{
@@ -108,7 +109,7 @@ export const AdminDashboard = () => {
                     borderRadius: 'var(--radius-sm) var(--radius-sm) 0 0',
                     transition: 'var(--transition-smooth)',
                   }}
-                  title={`Sales: $${item.sales}`}
+                  title={`Sales: ₹${item.sales}`}
                 />
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.month}</span>
               </div>
@@ -148,7 +149,7 @@ export const AdminDashboard = () => {
                       </Link>
                     </td>
                     <td>{prod.category}</td>
-                    <td>${prod.price.toFixed(2)}</td>
+                    <td>{formatPrice(prod.price)}</td>
                     <td>
                       <span className="badge badge-danger">{prod.stock} Left</span>
                     </td>
@@ -185,7 +186,7 @@ export const AdminDashboard = () => {
                       {ord.status}
                     </span>
                   </td>
-                  <td>${ord.grandTotal ? ord.grandTotal.toFixed(2) : '0.00'}</td>
+                  <td>{formatPrice(ord.grandTotal || 0)}</td>
                 </tr>
               ))}
             </tbody>

@@ -122,7 +122,7 @@ export const EditProduct = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
             <div className="form-group">
-              <label>Price ($)</label>
+              <label>Price (₹)</label>
               <input
                 type="number"
                 step="0.01"

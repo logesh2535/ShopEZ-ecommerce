@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
+import { formatPrice } from '../../utils/formatCurrency';
 import { ProductCard } from '../../components/product/ProductCard';
 import { fetchProductById, fetchProducts, createProductReview } from '../../services/productService';
 import { CartContext } from '../../context/CartContext';
@@ -189,12 +190,12 @@ export const ProductDetails = () => {
             <div style={{ padding: '1.25rem', background: 'rgba(17, 24, 39, 0.6)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
                 <span style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-heading)', color: 'var(--text-main)' }}>
-                  ${discountedPrice.toFixed(2)}
+                  {formatPrice(discountedPrice)}
                 </span>
                 {discount > 0 && (
                   <>
                     <span style={{ fontSize: '1.1rem', color: 'var(--text-muted)', textDecoration: 'line-through' }}>
-                      ${originalPrice.toFixed(2)}
+                      {formatPrice(originalPrice)}
                     </span>
                     <span className="badge badge-danger">{discount}% OFF</span>
                   </>

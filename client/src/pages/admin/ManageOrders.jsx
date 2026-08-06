@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AdminLayout } from '../../layouts/AdminLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchOrders } from '../../services/orderService';
 import { updateOrderStatus } from '../../services/adminService';
 import { ToastContext } from '../../context/ToastContext';
@@ -99,7 +100,7 @@ export const ManageOrders = () => {
                     </span>
                   </td>
                   <td>
-                    <strong>${ord.grandTotal ? ord.grandTotal.toFixed(2) : '0.00'}</strong>
+                    <strong>{formatPrice(ord.grandTotal || 0)}</strong>
                   </td>
                   <td>{ord.paymentMethod}</td>
                   <td>

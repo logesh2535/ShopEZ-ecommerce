@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AdminLayout } from '../../layouts/AdminLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchAdminDashboard } from '../../services/adminService';
 import { BarChart3, PieChart, TrendingUp, DollarSign } from 'lucide-react';
 
@@ -61,7 +62,7 @@ export const Analytics = () => {
                   <h4 style={{ fontSize: '0.92rem', color: 'var(--text-main)' }}>{p.name}</h4>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>⭐ {p.rating} ({p.reviewsCount} reviews)</span>
                 </div>
-                <strong style={{ fontSize: '1rem' }}>${p.price.toFixed(2)}</strong>
+                <strong style={{ fontSize: '1rem' }}>{formatPrice(p.price)}</strong>
               </div>
             ))}
           </div>

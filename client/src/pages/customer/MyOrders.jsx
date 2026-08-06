@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CustomerLayout } from '../../layouts/CustomerLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchOrders } from '../../services/orderService';
 import { ShoppingBag, ArrowRight, Zap, Clock, KeyRound, Truck } from 'lucide-react';
 
@@ -80,7 +81,7 @@ export const MyOrders = () => {
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Grand Total</div>
                     <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)' }}>
-                      ${order.grandTotal ? order.grandTotal.toFixed(2) : '0.00'}
+                      {formatPrice(order.grandTotal || 0)}
                     </span>
                   </div>
 

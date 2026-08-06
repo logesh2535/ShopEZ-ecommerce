@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { CheckCircle, ShoppingBag, ArrowRight, KeyRound, Calendar, Clock, Truck, ShieldCheck } from 'lucide-react';
 
 export const OrderSuccess = () => {
@@ -50,7 +51,7 @@ export const OrderSuccess = () => {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '0.75rem', borderTop: '1px solid var(--border-light)', fontSize: '1.1rem', fontWeight: 800 }}>
                 <span>Grand Total Paid:</span>
-                <span style={{ color: 'var(--primary-400)' }}>${order.grandTotal ? order.grandTotal.toFixed(2) : '0.00'}</span>
+                <span style={{ color: 'var(--primary-400)' }}>{formatPrice(order.grandTotal || 0)}</span>
               </div>
             </div>
           )}

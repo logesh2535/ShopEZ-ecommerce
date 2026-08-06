@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
 import { CartContext } from '../../context/CartContext';
+import { formatPrice } from '../../utils/formatCurrency';
 import { Trash2, ArrowRight, ShoppingBag, ShieldCheck } from 'lucide-react';
 
 export const Cart = () => {
@@ -83,7 +84,7 @@ export const Cart = () => {
                       Category: {product.category}
                     </div>
                     <div style={{ fontSize: '0.9rem', color: 'var(--primary-400)', fontWeight: 700, marginTop: '0.25rem' }}>
-                      ${effectivePrice.toFixed(2)} {product.discount > 0 && <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.78rem' }}>${product.price.toFixed(2)}</span>}
+                      {formatPrice(effectivePrice)} {product.discount > 0 && <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.78rem' }}>{formatPrice(product.price)}</span>}
                     </div>
                   </div>
 
@@ -106,7 +107,7 @@ export const Cart = () => {
 
                   {/* Line total */}
                   <div style={{ textAlign: 'right', fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)' }}>
-                    ${lineTotal.toFixed(2)}
+                    {formatPrice(lineTotal)}
                   </div>
 
                   {/* Remove Button */}
@@ -131,29 +132,29 @@ export const Cart = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Subtotal</span>
-                <span>${subtotalPrice.toFixed(2)}</span>
+                <span>{formatPrice(subtotalPrice)}</span>
               </div>
 
               {discountTotal > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--accent-emerald)' }}>
                   <span>Discount Saved</span>
-                  <span>-${discountTotal.toFixed(2)}</span>
+                  <span>-{formatPrice(discountTotal)}</span>
                 </div>
               )}
 
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Estimated Tax (8%)</span>
-                <span>${taxAmount.toFixed(2)}</span>
+                <span>{formatPrice(taxAmount)}</span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Shipping Fee</span>
-                <span>{shippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : `$${shippingFee.toFixed(2)}`}</span>
+                <span>{shippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : formatPrice(shippingFee)}</span>
               </div>
 
               <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', fontSize: '1.2rem', fontWeight: 800 }}>
                 <span>Grand Total</span>
-                <span style={{ color: 'var(--primary-400)' }}>${grandTotal.toFixed(2)}</span>
+                <span style={{ color: 'var(--primary-400)' }}>{formatPrice(grandTotal)}</span>
               </div>
             </div>
 

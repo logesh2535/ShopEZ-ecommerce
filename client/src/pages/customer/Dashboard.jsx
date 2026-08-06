@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CustomerLayout } from '../../layouts/CustomerLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { AuthContext } from '../../context/AuthContext';
 import { fetchOrders } from '../../services/orderService';
 import { ShoppingBag, Heart, User, Clock, ArrowRight } from 'lucide-react';
@@ -71,7 +72,7 @@ export const CustomerDashboard = () => {
                 <span className={`badge badge-${order.status === 'Delivered' ? 'success' : 'warning'}`}>
                   {order.status}
                 </span>
-                <strong style={{ fontSize: '1.05rem' }}>${order.grandTotal ? order.grandTotal.toFixed(2) : '0.00'}</strong>
+                <strong style={{ fontSize: '1.05rem' }}>{formatPrice(order.grandTotal || 0)}</strong>
                 <Link to={`/customer/orders/${order._id}`} className="btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.82rem' }}>
                   Details <ArrowRight size={14} />
                 </Link>

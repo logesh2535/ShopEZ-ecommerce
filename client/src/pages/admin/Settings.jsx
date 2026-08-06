@@ -7,7 +7,7 @@ export const Settings = () => {
   const [storeName, setStoreName] = useState('ShopEZ');
   const [tagline, setTagline] = useState('Your One-Stop Destination for Effortless Online Shopping.');
   const [supportEmail, setSupportEmail] = useState('support@shopez.com');
-  const [currency, setCurrency] = useState('USD ($)');
+  const [currency, setCurrency] = useState('INR (₹)');
   const { addToast } = useContext(ToastContext);
 
   const handleSave = (e) => {
@@ -59,6 +59,7 @@ export const Settings = () => {
             <div className="form-group">
               <label>Currency Format</label>
               <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="form-input">
+                <option value="INR (₹)">INR (₹)</option>
                 <option value="USD ($)">USD ($)</option>
                 <option value="EUR (€)">EUR (€)</option>
                 <option value="GBP (£)">GBP (£)</option>

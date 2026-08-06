@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminLayout } from '../../layouts/AdminLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchProducts } from '../../services/productService';
 import { deleteProduct } from '../../services/adminService';
 import { ToastContext } from '../../context/ToastContext';
@@ -89,7 +90,7 @@ export const ManageProducts = () => {
                     <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{p.name}</span>
                   </td>
                   <td>{p.category}</td>
-                  <td>${p.price.toFixed(2)}</td>
+                  <td>{formatPrice(p.price)}</td>
                   <td>{p.discount}%</td>
                   <td>
                     <span className={`badge badge-${p.stock > 5 ? 'success' : 'danger'}`}>

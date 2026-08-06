@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingBag, Heart, Star, Eye } from 'lucide-react';
 import { CartContext } from '../../context/CartContext';
 import { WishlistContext } from '../../context/WishlistContext';
-import { ToastContext } from '../../context/ToastContext';
+import { formatPrice } from '../../utils/formatCurrency';
 
 export const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
@@ -98,8 +98,8 @@ export const ProductCard = ({ product }) => {
 
         {/* Price Row */}
         <div className="price-row">
-          <span className="current-price">${discountedPrice.toFixed(2)}</span>
-          {discount > 0 && <span className="old-price">${originalPrice.toFixed(2)}</span>}
+          <span className="current-price">{formatPrice(discountedPrice)}</span>
+          {discount > 0 && <span className="old-price">{formatPrice(originalPrice)}</span>}
         </div>
       </div>
 

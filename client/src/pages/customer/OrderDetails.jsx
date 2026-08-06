@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CustomerLayout } from '../../layouts/CustomerLayout';
+import { formatPrice } from '../../utils/formatCurrency';
 import { fetchOrderById } from '../../services/orderService';
 import {
   Truck,
@@ -248,10 +249,10 @@ export const OrderDetails = () => {
                   <div style={{ flex: 1 }}>
                     <h4 style={{ fontSize: '0.95rem', color: 'var(--text-main)' }}>{item.name}</h4>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      Qty: {item.quantity} × ${item.price?.toFixed(2)}
+                      Qty: {item.quantity} × {formatPrice(item.price || 0)}
                     </div>
                   </div>
-                  <strong style={{ fontSize: '1.05rem' }}>${((item.price || 0) * (item.quantity || 1)).toFixed(2)}</strong>
+                  <strong style={{ fontSize: '1.05rem' }}>{formatPrice((item.price || 0) * (item.quantity || 1))}</strong>
                 </div>
               ))}
             </div>
@@ -313,19 +314,19 @@ export const OrderDetails = () => {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Subtotal</span>
-                <span>${order.totalAmount?.toFixed(2)}</span>
+                <span>{formatPrice(order.totalAmount || 0)}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Tax</span>
-                <span>${order.taxAmount?.toFixed(2)}</span>
+                <span>{formatPrice(order.taxAmount || 0)}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Shipping Fee</span>
-                <span>${order.shippingFee?.toFixed(2)}</span>
+                <span>{formatPrice(order.shippingFee || 0)}</span>
               </div>
               <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', fontSize: '1.15rem', fontWeight: 800 }}>
                 <span>Grand Total</span>
-                <span style={{ color: 'var(--primary-400)' }}>${order.grandTotal?.toFixed(2)}</span>
+                <span style={{ color: 'var(--primary-400)' }}>{formatPrice(order.grandTotal || 0)}</span>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Breadcrumb } from '../../components/common/Breadcrumb';
 import { CartContext } from '../../context/CartContext';
+import { formatPrice } from '../../utils/formatCurrency';
 import { AuthContext } from '../../context/AuthContext';
 import { ToastContext } from '../../context/ToastContext';
 import { placeOrder } from '../../services/orderService';
@@ -225,7 +226,7 @@ export const Checkout = () => {
                         </div>
                       </div>
                     </div>
-                    <span style={{ fontWeight: 800, color: 'var(--accent-amber)', fontSize: '1.1rem' }}>$4.99</span>
+                    <span style={{ fontWeight: 800, color: 'var(--accent-amber)', fontSize: '1.1rem' }}>₹49.00</span>
                   </label>
 
                   {/* Option 2: Scheduled Slot */}
@@ -418,7 +419,7 @@ export const Checkout = () => {
                       <span style={{ color: 'var(--text-main)', maxWidth: '200px' }}>
                         {product.name} (x{quantity})
                       </span>
-                      <span style={{ fontWeight: 700 }}>${(effectivePrice * quantity).toFixed(2)}</span>
+                      <span style={{ fontWeight: 700 }}>{formatPrice(effectivePrice * quantity)}</span>
                     </div>
                   );
                 })}
@@ -427,19 +428,19 @@ export const Checkout = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.92rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem', marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Subtotal</span>
-                  <span>${subtotalPrice.toFixed(2)}</span>
+                  <span>{formatPrice(subtotalPrice)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Tax (8%)</span>
-                  <span>${taxAmount.toFixed(2)}</span>
+                  <span>{formatPrice(taxAmount)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Shipping Fee ({deliveryType})</span>
-                  <span>{calculatedShippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : `$${calculatedShippingFee.toFixed(2)}`}</span>
+                  <span>{calculatedShippingFee === 0 ? <strong style={{ color: 'var(--accent-emerald)' }}>FREE</strong> : formatPrice(calculatedShippingFee)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary-400)', paddingTop: '0.5rem', borderTop: '1px solid var(--border-light)' }}>
                   <span>Grand Total</span>
-                  <span>${calculatedGrandTotal.toFixed(2)}</span>
+                  <span>{formatPrice(calculatedGrandTotal)}</span>
                 </div>
               </div>
 
