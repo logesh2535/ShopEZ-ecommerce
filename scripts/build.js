@@ -7,9 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
-console.log('📦 [ShopEZ Build] Starting production build...');
+console.log('📦 [ShopEZ Build] Installing client dependencies...');
+execSync('npm install --prefix client --include=dev', { cwd: rootDir, stdio: 'inherit' });
 
-// 1. Run client build
+console.log('📦 [ShopEZ Build] Running client Vite production build...');
 execSync('npm run build --prefix client', { cwd: rootDir, stdio: 'inherit' });
 
 const clientDist = path.join(rootDir, 'client', 'dist');
