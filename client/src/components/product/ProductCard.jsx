@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingBag, Heart, Star, Eye } from 'lucide-react';
 import { CartContext } from '../../context/CartContext';
 import { WishlistContext } from '../../context/WishlistContext';
+import { ToastContext } from '../../context/ToastContext';
 import { formatPrice } from '../../utils/formatCurrency';
 
 export const ProductCard = ({ product }) => {
