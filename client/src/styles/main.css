@@ -1,4 +1,7 @@
 @import './theme.css';
+@import './navbar.css';
+@import './products.css';
+@import './admin.css';
 
 * {
   margin: 0;

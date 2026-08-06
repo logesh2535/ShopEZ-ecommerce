@@ -1,0 +1,20 @@
+# Render Deployment Blueprint Configuration
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: shopez-ecommerce
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node server/server.js
+    healthCheckPath: /api
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
